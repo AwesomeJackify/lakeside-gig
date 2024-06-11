@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import config from "../../data/config.json";
+
+import { createStorefrontApiClient } from "@shopify/storefront-api-client";
+
+const client = createStorefrontApiClient({
+  storeDomain: "http://0b4091-a4.myshopify.com",
+  apiVersion: "2023-10",
+  privateAccessToken: import.meta.env.SHOPIFY_PRIVATE_ACCESS_TOKEN,
+  customFetchApi: fetch,
+});
+
+const productQuery = `
+  query ProductQuery($handle: String) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+    }
+  }
+`;
+
+const { data, errors, extensions } = await client.request(productQuery, {
+  variables: {
+    handle: "PCX150",
+  },
+});
+
+console.log(data);
+---
+
+<Layout title={config.business_name} description={config.description}>
+  <h1>{config.business_name}</h1>
+</Layout>
