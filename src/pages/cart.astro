@@ -6,6 +6,8 @@ import config from "../../data/config.json";
 
 import Cart from "../components/Cart";
 import CartItems from "../components/CartItems";
+
+const publicAccessToken = import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN;
 ---
 
 <Layout title={config.businessName} description={config.description}>
@@ -13,5 +15,5 @@ import CartItems from "../components/CartItems";
   <div class="w-full justify-end flex px-4">
     <Cart client:only="react" />
   </div>
-  <CartItems client:only="react" />
+  <CartItems client:only="react" token={publicAccessToken} />
 </Layout>

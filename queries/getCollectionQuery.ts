@@ -1,5 +1,5 @@
-export const CollectionQuery = `
-  query getCollectionById($id: ID!) {
+const getCollectionQuery = `
+  query getCollectionByIdQuery($id: ID!) {
     collection(id: $id) {
       id
       title
@@ -9,6 +9,14 @@ export const CollectionQuery = `
         edges {
           cursor
           node {
+            variants(first:10) {
+              edges {
+                node {
+                  title
+                  id
+                }
+              }
+            }
             title
             featuredImage{
               url
@@ -25,3 +33,5 @@ export const CollectionQuery = `
     }
   }
 `;
+
+export default getCollectionQuery;

@@ -7,16 +7,9 @@ import config from "../../data/config.json";
 import Cart from "../components/Cart";
 import AddToCart from "../components/AddToCart";
 
-import { CollectionQuery } from "../../queries/CollectionQuery";
-
-import { createStorefrontApiClient } from "@shopify/storefront-api-client";
-
-const client = createStorefrontApiClient({
-  storeDomain: "http://0b4091-a4.myshopify.com",
-  apiVersion: "2023-10",
-  publicAccessToken: import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN,
-  customFetchApi: fetch,
-});
+import { createClient } from "../../utils";
+import getCollectionQuery from "../../queries/getCollectionQuery";
+import { Image } from "astro:assets";
 
 const productQuery = `
   query ProductQuery($handle: String) {
@@ -28,17 +21,27 @@ const productQuery = `
   }
 `;
 
-const { data, errors, extensions } = await client.request(CollectionQuery, {
+const { data, errors, extensions } = await createClient(
+  import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN
+).request(getCollectionQuery, {
   variables: {
     id: "gid://shopify/Collection/271423144007",
   },
 });
+
+console.log(JSON.stringify(data, null, 2));
 
 const homePageProducts = data.collection.products.edges.map((product: any) => {
   return {
     id: product.node.id,
     title: product.node.title,
     imageUrl: product.node.featuredImage.url,
+    variants: product.node.variants.edges.map((variant: any) => {
+      return {
+        id: variant.node.id,
+        title: variant.node.title,
+      };
+    }),
   };
 });
 ---
@@ -54,9 +57,16 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
         <div class="flex flex-col gap-4 items-center">
           <div class="flex flex-col">
             <h2>{product.title}</h2>
-            <img src={product.imageUrl} alt={product.title} />
+            <Image
+              src={product.imageUrl}
+              alt={product.title}
+              class="h-96 w-full object-cover"
+              width={100}
+              height={100}
+            />
+            <p>{product.variants[0].title}</p>
           </div>
-          <AddToCart product={product} client:load />
+          <AddToCart product={product.variants[0]} client:load />
         </div>
       ))
     }
