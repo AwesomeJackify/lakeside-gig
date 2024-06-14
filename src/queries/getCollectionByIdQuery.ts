@@ -1,4 +1,4 @@
-const getCollectionQuery = `
+const getCollectionByIdQuery = `
   query getCollectionByIdQuery($id: ID!) {
     collection(id: $id) {
       id
@@ -34,4 +34,4 @@ const getCollectionQuery = `
   }
 `;
 
-export default getCollectionQuery;
+export default getCollectionByIdQuery;

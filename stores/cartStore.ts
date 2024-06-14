@@ -6,20 +6,28 @@ export function addToCart(product: any) {
   const existingEntry = cartItems.get()[product.id];
   if (existingEntry) {
     cartItems.setKey(product.id, {
-      ...existingEntry,
-      quantity: existingEntry.quantity + 1,
+      data: {
+        ...existingEntry.data,  // Copy the existing product data
+        quantity: existingEntry.data.quantity + product.quantity  // Increment the quantity inside the product data
+      }
     })
   } else {
     cartItems.setKey(
       product.id,
-      { data: product, quantity: 1 }
+      { data: product }
     );
   }
+
+  console.log(cartItems.get())
+
+  localStorage.setItem("cart", JSON.stringify(cartItems.get()));
 }
 
 export function removeFromCart(product: any) {
+  console.log(product)
   const newCart: { [key: string]: any } = { ...cartItems.get() };
-  delete newCart[product.id];
+  delete newCart[product.data.id];
   cartItems.set(newCart);
-  localStorage.setItem("cart", JSON.stringify(newCart));
+
+  localStorage.setItem("cart", JSON.stringify(cartItems.get()));
 }

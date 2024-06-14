@@ -22,7 +22,7 @@ const Cart = () => {
       <div className="badge badge-sm absolute bottom-0 right-0">
         {
           Object.values($cartItems).reduce(
-            (acc, item: any) => acc + item.quantity,
+            (acc, item: any) => acc + item.data.quantity,
             0
           ) as number
         }

@@ -2,39 +2,30 @@
 import { Icon } from "astro-icon/components";
 
 import Layout from "../layouts/Layout.astro";
-import config from "../../data/config.json";
+import config from "../data/config.json";
 
 import Cart from "../components/Cart";
 import AddToCart from "../components/AddToCart";
 
-import { createClient } from "../../utils";
-import getCollectionQuery from "../../queries/getCollectionQuery";
+import { createClient } from "../utils";
+import getCollectionByIdQuery from "../queries/getCollectionByIdQuery";
 import { Image } from "astro:assets";
 
-const productQuery = `
-  query ProductQuery($handle: String) {
-    product(handle: $handle) {
-      id
-      title
-      handle
-    }
-  }
-`;
-
-const { data, errors, extensions } = await createClient(
+// get the collection that is shown on the home page
+const { data } = await createClient(
   import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN
-).request(getCollectionQuery, {
+).request(getCollectionByIdQuery, {
   variables: {
     id: "gid://shopify/Collection/271423144007",
   },
 });
 
-console.log(JSON.stringify(data, null, 2));
-
+// parse the home page collection data
 const homePageProducts = data.collection.products.edges.map((product: any) => {
   return {
     id: product.node.id,
     title: product.node.title,
+    handle: product.node.handle,
     imageUrl: product.node.featuredImage.url,
     variants: product.node.variants.edges.map((variant: any) => {
       return {
@@ -47,27 +38,17 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 ---
 
 <Layout title={config.businessName} description={config.description}>
-  <h1>{config.businessName}</h1>
-  <div class="w-full justify-end flex px-4">
-    <Cart client:only="react" />
-  </div>
   <div class="grid grid-cols-2">
     {
       homePageProducts.map((product: any) => (
-        <div class="flex flex-col gap-4 items-center">
-          <div class="flex flex-col">
-            <h2>{product.title}</h2>
-            <Image
-              src={product.imageUrl}
-              alt={product.title}
-              class="h-96 w-full object-cover"
-              width={100}
-              height={100}
-            />
-            <p>{product.variants[0].title}</p>
-          </div>
-          <AddToCart product={product.variants[0]} client:load />
-        </div>
+        <a href={`/shop/${product.handle}`} class="flex flex-col h-full">
+          <Image
+            src={product.imageUrl}
+            alt={product.title}
+            class="h-full w-full object-contain"
+            inferSize={true}
+          />
+        </a>
       ))
     }
   </div>

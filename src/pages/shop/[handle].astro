@@ -1,0 +1,56 @@
+---
+export const prerender = false;
+
+import { Icon } from "astro-icon/components";
+
+import Layout from "../../layouts/Layout.astro";
+import config from "../../data/config.json";
+
+import DangerousHtml from "../../components/DangerousHtml";
+import SelectVariant from "../../components/SelectVariant";
+
+import { createClient } from "../../utils";
+
+import getProductByHandleQuery from "../../queries/getProductByHandleQuery";
+import { Image } from "astro:assets";
+
+const { handle } = Astro.params;
+
+const { data } = await createClient(
+  import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN
+).request(getProductByHandleQuery, {
+  variables: {
+    handle: handle,
+  },
+});
+---
+
+<Layout title={config.businessName} description={config.description}>
+  <section>
+    <div class="flex">
+      <div class="flex h-96">
+        <Image
+          class="h-full w-full object-contain"
+          src={data.productByHandle.featuredImage.url}
+          inferSize
+          alt={data.productByHandle.featuredImage.altText
+            ? data.productByHandle.featuredImage.altText
+            : config.businessName}
+        />
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h1 class="text-2xl">{data.productByHandle.title}</h1>
+        <div>
+          <DangerousHtml code={data.productByHandle.descriptionHtml} />
+        </div>
+
+        <SelectVariant
+          productTitle={data.productByHandle.title}
+          variants={data.productByHandle.variants}
+          client:only="react"
+        />
+      </div>
+    </div>
+  </section>
+</Layout>
