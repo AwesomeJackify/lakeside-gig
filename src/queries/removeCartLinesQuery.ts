@@ -1,6 +1,7 @@
-const getCartQuery = `
-  query getCartQuery($id: ID!) {
-    cart(id: $id) {
+const removeCartLinesQuery = `
+  mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart {
         checkoutUrl
         id
         createdAt
@@ -41,7 +42,12 @@ const getCartQuery = `
           }
         }
       }
+      userErrors {
+        field
+        message
+      }
+    }
   }
 `
 
-export default getCartQuery
+export default removeCartLinesQuery

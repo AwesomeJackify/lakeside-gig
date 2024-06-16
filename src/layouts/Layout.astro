@@ -22,7 +22,10 @@ import { ViewTransitions } from "astro:transitions";
     <ViewTransitions />
   </head>
   <body>
-    <Nav client:only="react" />
+    <Nav
+      client:only="react"
+      token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
+    />
     <slot />
     <style is:global>
       :root {

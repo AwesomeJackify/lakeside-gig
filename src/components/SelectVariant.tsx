@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
 
 interface Props {
-  productTitle: string;
   variants: any;
+  token: string;
 }
 
-const SelectVariant = ({ productTitle, variants }: Props) => {
+const SelectVariant = ({ variants, token }: Props) => {
   const [variant, setVariant] = useState(variants.edges[0].node);
 
   const handleSelectChange = (event: any) => {
@@ -30,14 +30,7 @@ const SelectVariant = ({ productTitle, variants }: Props) => {
           </option>
         ))}
       </select>
-      <AddToCart
-        variant={{
-          id: variant.id,
-          variant: variant.title,
-          product: productTitle,
-          quantity: 1,
-        }}
-      />
+      <AddToCart token={token} variantId={variant.id} />
     </div>
   );
 };

@@ -4,13 +4,17 @@ import config from "../data/config.json";
 
 import Cart from "./Cart";
 
-const Nav = () => {
+interface Props {
+  token: string;
+}
+
+const Nav = ({ token }: Props) => {
   return (
     <nav className="flex items-center w-full justify-between px-4 py-4">
       <a className="text-2xl bold" href="/">
         {config.businessName}
       </a>
-      <Cart />
+      <Cart token={token} />
     </nav>
   );
 };

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { removeFromCart, cartItems, clearCart } from "../../stores/cartStore";
 import { createClient } from "../utils";
 
-import createCartQuery from "../queries/createCartQuery";
-import addCartLinesQuery from "../queries/addCartLinesQuery";
-import { useStore } from "@nanostores/react";
+import getCartQuery from "../queries/getCartQuery";
+import removeCartLinesQuery from "../queries/removeCartLinesQuery";
+import { $totalQuantity } from "../../stores/cartStore";
 
 interface Props {
   token: string;
@@ -13,50 +12,72 @@ interface Props {
 
 const CartItems = ({ token }: Props) => {
   const [shopifyCart, setShopifyCart] = useState({} as any);
-  const $cartItems = useStore(cartItems);
+  const [cartItems, setCartItems] = useState([] as any);
 
   useEffect(() => {
-    const createCart = async () => {
-      const { data } = await createClient(token).request(createCartQuery);
-
+    const getCart = async () => {
+      const { data } = await createClient(token).request(getCartQuery, {
+        variables: {
+          id: localStorage.getItem("cartId"),
+        },
+      });
       setShopifyCart(data);
+
+      if (data.cart) {
+        data.cart.lines.edges.forEach((line: any) => {
+          setCartItems((prevItems: any) => [
+            ...prevItems,
+            {
+              product: line.node.merchandise.product.title,
+              variant: line.node.merchandise.title,
+              quantity: line.node.quantity,
+              id: line.node.id,
+            },
+          ]);
+        });
+      }
     };
 
-    createCart();
+    getCart();
   }, []);
 
-  const handleDeleteCartItem = (cartItem: any) => {
-    removeFromCart(cartItem);
+  const handleDeleteCartItem = async (
+    lineId: string,
+    quantityToRemove: number
+  ) => {
+    const { data } = await createClient(token).request(removeCartLinesQuery, {
+      variables: {
+        cartId: shopifyCart.cart.id,
+        lineIds: [lineId],
+      },
+    });
+
+    if (data) {
+      setCartItems((prevItems: any) =>
+        prevItems.filter((item: any) => item.id !== lineId)
+      );
+
+      $totalQuantity.set($totalQuantity.get() - quantityToRemove);
+    }
   };
 
   const handleCheckout = async () => {
-    console.log($cartItems);
-    if (Object.entries(shopifyCart).length !== 0) {
-      const { data } = await createClient(token).request(addCartLinesQuery, {
-        variables: {
-          cartId: shopifyCart.cartCreate.cart.id,
-          lines: Object.entries($cartItems).map(
-            ([id, cartItem]: [string, any]) => ({
-              merchandiseId: cartItem.data.id,
-              quantity: cartItem.data.quantity,
-            })
-          ),
-        },
-      });
-
-      window.location.href = data.cartLinesAdd.cart.checkoutUrl;
-    }
+    window.location.href = shopifyCart.cart.checkoutUrl;
   };
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col">
-        {Object.entries($cartItems).map(([id, cartItem]: [string, any]) => (
-          <div className="flex gap-4" key={id}>
-            <h3>{cartItem.data.product}</h3>
-            <h3>{cartItem.data.variant}</h3>
-            <p>Quantity: {cartItem.data.quantity}</p>
-            <button onClick={() => handleDeleteCartItem(cartItem)}>
+        {cartItems.map((cartItem: any) => (
+          <div className="flex gap-4" key={cartItem.id}>
+            <h3>{cartItem.product}</h3>
+            <h3>{cartItem.variant}</h3>
+            <p>Quantity: {cartItem.quantity}</p>
+            <button
+              onClick={() =>
+                handleDeleteCartItem(cartItem.id, cartItem.quantity)
+              }
+            >
               Remove
             </button>
           </div>
@@ -65,7 +86,7 @@ const CartItems = ({ token }: Props) => {
       <button
         onClick={() => handleCheckout()}
         className={`btn btn-primary w-fit ${
-          Object.keys($cartItems).length === 0 && "hidden"
+          cartItems.length === 0 && "hidden"
         }`}
       >
         Checkout

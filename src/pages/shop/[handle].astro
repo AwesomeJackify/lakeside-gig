@@ -46,7 +46,7 @@ const { data } = await createClient(
         </div>
 
         <SelectVariant
-          productTitle={data.productByHandle.title}
+          token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
           variants={data.productByHandle.variants}
           client:only="react"
         />
