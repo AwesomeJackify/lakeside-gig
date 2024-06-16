@@ -29,7 +29,8 @@ const { data } = await createClient(
   <section>
     <div class="flex">
       <div class="flex h-96">
-        <img
+        <Image
+          inferSize
           class="h-full w-full object-contain"
           src={data.productByHandle.featuredImage.url}
           alt={data.productByHandle.featuredImage.altText
