@@ -39,7 +39,8 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     {
       homePageProducts.map((product: any) => (
         <a href={`/shop/${product.handle}`} class="flex flex-col">
-          <img
+          <Image
+            inferSize
             src={product.imageUrl}
             alt={product.title}
             class="h-full w-full object-contain"

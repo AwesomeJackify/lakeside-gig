@@ -10,4 +10,7 @@ export default defineConfig({
   integrations: [tailwind(), icon(), react()],
   output: "hybrid",
   adapter: netlify(),
+  image: {
+    domains: ["cdn.shopify.com"],
+  },
 });
