@@ -8,6 +8,13 @@ import { createClient } from "../utils";
 import getCollectionByIdQuery from "../queries/getCollectionByIdQuery";
 import { Image } from "astro:assets";
 
+import hero1 from "../assets/images/hero1.jpg";
+import hero2 from "../assets/images/hero2.jpg";
+import hero3 from "../assets/images/hero3.png";
+import hero4 from "../assets/images/hero4.png";
+
+const heroImages = [hero1, hero2, hero3, hero4];
+
 // get the collection that is shown on the home page
 const { data } = await createClient(
   import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN
@@ -35,6 +42,21 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 ---
 
 <Layout title={config.businessName} description={config.description}>
+  <section
+    class="w-full h-[500px] grid grid-cols-4 max-md:h-96 max-md:grid-cols-2"
+  >
+    {
+      heroImages.map((heroImage, index) => (
+        <Image
+          src={heroImage}
+          alt="Hero image"
+          class={`h-full w-full object-cover ${
+            index > 1 ? "max-md:hidden" : ""
+          }`}
+        />
+      ))
+    }
+  </section>
   <div class="grid grid-cols-2">
     {
       homePageProducts.map((product: any) => (

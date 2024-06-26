@@ -66,12 +66,13 @@ const Cart = ({ token }: Props) => {
   }, []);
 
   return (
-    <a className="relative" href="/cart">
-      <Icon icon="mdi:cart-outline" className="text-5xl" />
+    <a className="relative border-2 p-1 rounded-md border-black" href="/cart">
+      BAG [{totalQuantity}]
+      {/* <Icon icon="mdi:cart-outline" className="text-5xl" />
 
       <div className="badge badge-sm absolute bottom-0 right-0">
         {totalQuantity}
-      </div>
+      </div> */}
     </a>
   );
 };
