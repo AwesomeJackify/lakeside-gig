@@ -9,6 +9,13 @@ const getCollectionByIdQuery = `
         edges {
           cursor
           node {
+            images(first:2) {
+              edges {
+                node {
+                  url
+                }
+              }
+            }
             variants(first:10) {
               edges {
                 node {

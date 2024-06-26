@@ -25,11 +25,15 @@ const { data } = await createClient(
 });
 
 // parse the home page collection data
+const homePageCollectionName = data.collection.title;
+console.log(homePageCollectionName);
+
 const homePageProducts = data.collection.products.edges.map((product: any) => {
   return {
     id: product.node.id,
     title: product.node.title,
     handle: product.node.handle,
+    images: product.node.images,
     imageUrl: product.node.featuredImage.url,
     variants: product.node.variants.edges.map((variant: any) => {
       return {
@@ -39,6 +43,8 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     }),
   };
 });
+
+console.log(homePageProducts[0].images.edges);
 ---
 
 <Layout title={config.businessName} description={config.description}>
@@ -57,18 +63,29 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
       ))
     }
   </section>
-  <div class="grid grid-cols-2">
+  <section class="grid grid-cols-2 px-4 gap-4 mt-8">
     {
       homePageProducts.map((product: any) => (
-        <a href={`/shop/${product.handle}`} class="flex flex-col">
+        <a
+          href={`/shop/${product.handle}`}
+          class="flex flex-col group relative"
+        >
           <Image
             inferSize
             src={product.imageUrl}
             alt={product.title}
-            class="h-full w-full object-contain"
+            class="h-full w-full object-cover"
           />
+          {product.images.edges.length > 1 && (
+            <Image
+              inferSize
+              src={product.images.edges[1].node.url}
+              alt={product.title}
+              class="h-full w-full object-cover opacity-0 group-hover:opacity-100 absolute z-50 transition duration-300"
+            />
+          )}
         </a>
       ))
     }
-  </div>
+  </section>
 </Layout>
