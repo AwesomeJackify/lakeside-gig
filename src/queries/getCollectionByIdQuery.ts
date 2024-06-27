@@ -30,6 +30,16 @@ const getCollectionByIdQuery = `
             }
             id
             handle
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+              maxVariantPrice {
+                amount
+                currencyCode
+              }
+            }
           }
         }
         pageInfo{

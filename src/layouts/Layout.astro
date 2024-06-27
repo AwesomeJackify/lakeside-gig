@@ -48,6 +48,11 @@ import { ViewTransitions } from "astro:transitions";
         font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
           DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
       }
+
+      ul {
+        @apply list-disc;
+        padding-left: 24px;
+      }
     </style>
     <script is:inline>
       document.addEventListener("astro:before-preparation", (ev) => {

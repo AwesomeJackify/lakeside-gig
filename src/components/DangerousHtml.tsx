@@ -5,7 +5,12 @@ interface Props {
 }
 
 const DangerousHtml = ({ code }: Props) => {
-  return <p dangerouslySetInnerHTML={{ __html: code }}></p>;
+  return (
+    <div
+      className="flex flex-col gap-4"
+      dangerouslySetInnerHTML={{ __html: code }}
+    ></div>
+  );
 };
 
 export default DangerousHtml;

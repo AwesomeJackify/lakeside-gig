@@ -7,6 +7,7 @@ import config from "../data/config.json";
 import { createClient } from "../utils";
 import getCollectionByIdQuery from "../queries/getCollectionByIdQuery";
 import { Image } from "astro:assets";
+import { formatter } from "../utils";
 
 import hero1 from "../assets/images/hero1.jpg";
 import hero2 from "../assets/images/hero2.jpg";
@@ -26,7 +27,6 @@ const { data } = await createClient(
 
 // parse the home page collection data
 const homePageCollectionName = data.collection.title;
-console.log(homePageCollectionName);
 
 const homePageProducts = data.collection.products.edges.map((product: any) => {
   return {
@@ -35,18 +35,13 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     handle: product.node.handle,
     images: product.node.images,
     imageUrl: product.node.featuredImage.url,
-    variants: product.node.variants.edges.map((variant: any) => {
-      return {
-        id: variant.node.id,
-        title: variant.node.title,
-      };
-    }),
+    maxPrice: product.node.priceRange.maxVariantPrice.amount,
   };
 });
 ---
 
 <Layout title={config.businessName} description={config.description}>
-  <div class="flex flex-col gap-16">
+  <div class="flex flex-col gap-16 max-md:gap-8">
     <section
       class="w-full h-[500px] grid grid-cols-4 max-md:h-96 max-md:grid-cols-2"
     >
@@ -63,29 +58,35 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
         ))
       }
     </section>
-    <section class="flex flex-col gap-16">
-      <h1 class="text-center text-4xl">{homePageCollectionName}</h1>
+    <section class="flex flex-col gap-16 max-md:gap-8">
+      <h1 class="text-center text-4xl max-md:text-2xl">
+        {homePageCollectionName}
+      </h1>
       <div class="grid grid-cols-2 px-4 gap-4">
         {
           homePageProducts.map((product: any) => (
-            <a
-              href={`/shop/${product.handle}`}
-              class="flex flex-col group relative"
-            >
-              <Image
-                inferSize
-                src={product.imageUrl}
-                alt={product.title}
-                class="h-full w-full object-cover"
-              />
-              {product.images.edges.length > 1 && (
+            <a href={`/shop/${product.handle}`} class="flex flex-col group">
+              <div class="relative h-full w-full overflow-hidden  ">
                 <Image
                   inferSize
-                  src={product.images.edges[1].node.url}
+                  src={product.imageUrl}
                   alt={product.title}
-                  class="h-full w-full object-cover opacity-0 group-hover:opacity-100 absolute z-10 transition duration-300"
+                  class="h-full w-full object-contain"
                 />
-              )}
+                {product.images.edges.length > 1 && (
+                  <Image
+                    inferSize
+                    src={product.images.edges[1].node.url}
+                    alt={product.title}
+                    class="top-0 left-0 right-0 bottom-0 object-contain opacity-0 group-hover:opacity-100 absolute z-10 transition duration-300"
+                  />
+                )}
+              </div>
+
+              <h1 class="uppercase text-sm">{product.title}</h1>
+              <h2 class="text-sm font-light">
+                {formatter.format(product.maxPrice)}
+              </h2>
             </a>
           ))
         }
