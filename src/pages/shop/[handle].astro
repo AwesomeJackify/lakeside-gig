@@ -27,24 +27,27 @@ const { data } = await createClient(
 
 <Layout title={config.businessName} description={config.description}>
   <section>
-    <div class="flex">
-      <div class="flex h-96">
-        <Image
-          inferSize
-          class="h-full w-full object-contain"
-          src={data.productByHandle.featuredImage.url}
-          alt={data.productByHandle.featuredImage.altText
-            ? data.productByHandle.featuredImage.altText
-            : config.businessName}
-        />
-      </div>
-
-      <div class="flex flex-col gap-4">
-        <h1 class="text-2xl">{data.productByHandle.title}</h1>
-        <div>
+    <div class="grid grid-cols-3 px-2">
+      <div class="flex flex-col gap-4 justify-center top-0 sticky h-screen">
+        <h1 class="text-sm">{data.productByHandle.title}</h1>
+        <div class="text-xs">
           <DangerousHtml code={data.productByHandle.descriptionHtml} />
         </div>
+      </div>
+      <div class="flex flex-col">
+        {
+          data.productByHandle.images.edges.map((image: any) => (
+            <Image
+              inferSize
+              class="h-full w-full object-cover aspect-[2/3]"
+              src={image.node.url}
+              alt={image.altText ? image.altText : config.businessName}
+            />
+          ))
+        }
+      </div>
 
+      <div class="justify-center items-center flex sticky top-0 h-screen">
         <SelectVariant
           token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
           variants={data.productByHandle.variants}

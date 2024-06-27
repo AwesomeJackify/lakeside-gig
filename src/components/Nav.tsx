@@ -2,7 +2,7 @@ import React from "react";
 
 import config from "../data/config.json";
 
-import logoImg from "../assets/images/logo.jpg";
+import logoImg from "../assets/images/logo.png";
 import logoTextImg from "../assets/images/logoText.png";
 
 import Cart from "./Cart";
@@ -31,10 +31,10 @@ const Nav = ({ token }: Props) => {
   ];
 
   return (
-    <nav className="px-4 py-4">
-      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden">
-        <div className="flex items-center gap-16">
-          <a className="text-2xl bold" href="/">
+    <nav className="px-4 py-4 sticky top-0 z-50">
+      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs">
+        <div className="flex items-center gap-8">
+          <a href="/">
             <img
               src={logoTextImg.src}
               width={200}
@@ -44,7 +44,11 @@ const Nav = ({ token }: Props) => {
             />
           </a>
           {leftItems.map((leftItem) => (
-            <a href={leftItem.url} className="uppercase">
+            <a
+              href={leftItem.url}
+              className="uppercase link link-hover"
+              key={leftItem.name}
+            >
               {leftItem.name}
             </a>
           ))}
@@ -54,15 +58,19 @@ const Nav = ({ token }: Props) => {
           <img
             src={logoImg.src}
             alt="logo"
-            width={200}
-            height={200}
+            width={500}
+            height={500}
             className="w-16 object-cover"
           />
         </a>
 
-        <div className="flex items-center gap-16 justify-end">
+        <div className="flex items-center gap-8 justify-end">
           {rightItems.map((rightItem) => (
-            <a href={rightItem.url} className="uppercase">
+            <a
+              href={rightItem.url}
+              className="uppercase link link-hover"
+              key={rightItem.name}
+            >
               {rightItem.name}
             </a>
           ))}
@@ -75,6 +83,8 @@ const Nav = ({ token }: Props) => {
           <img
             src={logoTextImg.src}
             alt="text logo"
+            width={500}
+            height={500}
             className="w-32 object-cover"
           />
         </a>

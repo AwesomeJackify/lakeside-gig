@@ -5,6 +5,14 @@ const getProductByHandleQuery = `
       title
       handle
       descriptionHtml
+      images(first:5) {
+        edges {
+          node {
+            altText
+            url
+          }
+        }
+      }
       variants(first:10) {
         edges {
           node {

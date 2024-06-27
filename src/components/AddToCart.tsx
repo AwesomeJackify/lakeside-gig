@@ -38,7 +38,7 @@ interface Props {
 const AddToCart = ({ variantId, token }: Props) => {
   return (
     <button
-      className="btn btn-sm w-fit h-full"
+      className="btn btn-sm w-fit"
       onClick={() => handleAddToCart(variantId, token)}
     >
       Add To Cart

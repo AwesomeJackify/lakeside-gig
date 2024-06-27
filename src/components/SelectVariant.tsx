@@ -18,7 +18,7 @@ const SelectVariant = ({ variants, token }: Props) => {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 flex-col">
       <select
         className="select select-bordered max-w-xs w-fit"
         onChange={(e) => handleSelectChange(e)}
