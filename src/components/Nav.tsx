@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import config from "../data/config.json";
 
@@ -12,6 +12,8 @@ interface Props {
 }
 
 const Nav = ({ token }: Props) => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
   const leftItems = [
     {
       name: "about",
@@ -30,9 +32,21 @@ const Nav = ({ token }: Props) => {
     },
   ];
 
+  const bodyElement = document.getElementsByTagName("body")[0];
+
+  useEffect(() => {
+    if (showMobileMenu) {
+      bodyElement.classList.add("max-h-screen");
+      bodyElement.classList.add("overflow-hidden");
+    } else {
+      bodyElement.classList.remove("max-h-screen");
+      bodyElement.classList.remove("overflow-hidden");
+    }
+  }, [showMobileMenu]);
+
   return (
-    <nav className="px-4 py-4 sticky top-0 z-50">
-      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs">
+    <nav className="px-4 py-4">
+      <div className="sticky top-0 grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs z-50">
         <div className="flex items-center gap-8">
           <a href="/">
             <img
@@ -78,7 +92,7 @@ const Nav = ({ token }: Props) => {
         </div>
       </div>
 
-      <div className="lg:hidden flex w-full justify-between items-center">
+      <div className="lg:hidden flex w-full justify-between items-center z-50 relative">
         <a href="/">
           <img
             src={logoTextImg.src}
@@ -90,7 +104,38 @@ const Nav = ({ token }: Props) => {
         </a>
         <div className="flex items-center gap-2">
           <Cart token={token} />
-          <button className="border-2 p-1 rounded-md border-black">MENU</button>
+          <button
+            className="border-2 p-1 rounded-md border-black"
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+          >
+            MENU
+          </button>
+        </div>
+      </div>
+      <div
+        className={`fixed z-40 top-0 left-0 right-0 md:hidden bottom-0 bg-white ${
+          showMobileMenu ? "" : "hidden"
+        }`}
+      >
+        <div className="flex flex-col gap-4 py-4 mt-16 ml-6">
+          {leftItems.map((leftItem) => (
+            <a
+              href={leftItem.url}
+              className="uppercase link link-hover"
+              key={leftItem.name}
+            >
+              {leftItem.name}
+            </a>
+          ))}
+          {rightItems.map((rightItem) => (
+            <a
+              href={rightItem.url}
+              className="uppercase link link-hover"
+              key={rightItem.name}
+            >
+              {rightItem.name}
+            </a>
+          ))}
         </div>
       </div>
     </nav>

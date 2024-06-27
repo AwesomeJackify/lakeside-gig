@@ -5,6 +5,7 @@ interface Props {
 }
 
 import Nav from "../components/Nav";
+import Footer from "../components/Footer.astro";
 const { title, description } = Astro.props;
 
 import { ViewTransitions } from "astro:transitions";
@@ -27,6 +28,7 @@ import { ViewTransitions } from "astro:transitions";
       token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
     />
     <slot />
+    <Footer />
     <style is:global>
       :root {
         --accent: 136, 58, 234;

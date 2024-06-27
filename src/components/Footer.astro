@@ -1,0 +1,23 @@
+---
+const date = new Date().getFullYear();
+---
+
+<footer
+  class="grid grid-cols-2 max-md:grid-cols-1 uppercase py-16 max-md:py-8 max-md:px-2 font-light text-xs max-md:text-sm px-16"
+>
+  <div class="flex gap-16 max-md:flex-col max-md:gap-2">
+    <a href="https://instagram.com" class="link link-hover">instagram</a>
+    <div class="flex flex-col gap-1">
+      <h1>company: Lakeside LTD</h1>
+      <a href="#" class="link link-hover">admin@lakeside.com</a>
+    </div>
+    <div class="flex flex-col gap-1">
+      <a href="#" class="link link-hover">Terms of use</a>
+      <a href="#" class="link link-hover">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="flex flex-col items-end gap-1">
+    <h1>copyright Lakeside {date}</h1>
+    <h1>shipping from New Zealand</h1>
+  </div>
+</footer>
