@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { createClient } from "../utils";
+import { createClient, formatter } from "../utils";
 
 import getCartQuery from "../queries/getCartQuery";
 import removeCartLinesQuery from "../queries/removeCartLinesQuery";
@@ -22,6 +22,7 @@ const CartItems = ({ token }: Props) => {
         },
       });
       setShopifyCart(data);
+      console.log(data);
 
       if (data.cart) {
         data.cart.lines.edges.forEach((line: any) => {
@@ -29,15 +30,16 @@ const CartItems = ({ token }: Props) => {
             ...prevItems,
             {
               product: line.node.merchandise.product.title,
+              image: line.node.merchandise.product.featuredImage.url,
               variant: line.node.merchandise.title,
               quantity: line.node.quantity,
+              price: line.node.merchandise.price.amount,
               id: line.node.id,
             },
           ]);
         });
       }
     };
-
     getCart();
   }, []);
 
@@ -66,31 +68,73 @@ const CartItems = ({ token }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col">
-        {cartItems.map((cartItem: any) => (
-          <div className="flex gap-4" key={cartItem.id}>
-            <h3>{cartItem.product}</h3>
-            <h3>{cartItem.variant}</h3>
-            <p>Quantity: {cartItem.quantity}</p>
-            <button
-              onClick={() =>
-                handleDeleteCartItem(cartItem.id, cartItem.quantity)
-              }
-            >
-              Remove
-            </button>
-          </div>
-        ))}
+    <div className="grid grid-cols-2 max-w-screen-xl mx-auto">
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th></th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {cartItems.map((cartItem: any, index: number) => (
+              <tr key={cartItem.product}>
+                <th>
+                  <img
+                    src={cartItem.image}
+                    width={100}
+                    height={100}
+                    className="object-contain mx-auto"
+                    alt={cartItem.product}
+                  />
+                </th>
+                <td>
+                  {cartItem.product}
+                  <br />
+                  {cartItem.variant}
+                </td>
+                <td>{cartItem.quantity}</td>
+                <td>{formatter.format(cartItem.price)}</td>
+                <td>
+                  <button
+                    onClick={() =>
+                      handleDeleteCartItem(cartItem.id, cartItem.quantity)
+                    }
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <button
-        onClick={() => handleCheckout()}
-        className={`btn btn-primary w-fit ${
-          cartItems.length === 0 && "hidden"
-        }`}
-      >
-        Checkout
-      </button>
+      <div className="flex flex-col max-w-md mx-auto w-full gap-8">
+        <div>
+          <h1 className="font-light">SUBTOTAL</h1>
+          <h2 className="text-4xl">
+            {shopifyCart.cart &&
+              formatter.format(shopifyCart.cart.cost.subtotalAmount.amount)}
+          </h2>
+        </div>
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={handleCheckout}
+            className="w-full border-[1px] py-1 rounded-sm border-gray-500 hover:bg-black transition hover:text-white"
+          >
+            Continue To Checkout
+          </button>
+          <p className="text-center font-light text-xs">
+            SHIPPING AND TAXES WILL BE CALCULATED ON CHECKOUT. DUTIES AND IMPORT
+            FEES MAY BE REQUIRED.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

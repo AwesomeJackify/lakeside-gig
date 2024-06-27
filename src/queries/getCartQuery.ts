@@ -14,9 +14,16 @@ const getCartQuery = `
                 ... on ProductVariant {
                   product {
                     title
+                    featuredImage{
+                      url
+                    }
                   }
                   title
                   id
+                  price {
+                    amount
+                    currencyCode
+                  }
                 }
               }
             }
