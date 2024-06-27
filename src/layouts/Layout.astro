@@ -49,5 +49,25 @@ import { ViewTransitions } from "astro:transitions";
           DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
       }
     </style>
+    <script is:inline>
+      document.addEventListener("astro:before-preparation", (ev) => {
+        const originalLoader = ev.loader;
+        ev.loader = async function () {
+          const spinner = document.createElement("span");
+          spinner.classList.add(
+            "loading",
+            "loading-infinity",
+            "loading-lg",
+            "fixed",
+            "right-4",
+            "bottom-4",
+            "z-20"
+          );
+          document.body.appendChild(spinner);
+          await originalLoader();
+          document.body.removeChild(spinner);
+        };
+      });
+    </script>
   </body>
 </html>
