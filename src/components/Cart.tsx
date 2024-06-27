@@ -66,7 +66,10 @@ const Cart = ({ token }: Props) => {
   }, []);
 
   return (
-    <a className="relative border-2 p-1 rounded-md border-black" href="/cart">
+    <a
+      className="relative border-2 p-1 rounded-md border-black hover:bg-black hover:text-white transition"
+      href="/cart"
+    >
       BAG [{totalQuantity}]
       {/* <Icon icon="mdi:cart-outline" className="text-5xl" />
 

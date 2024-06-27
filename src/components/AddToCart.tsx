@@ -38,10 +38,10 @@ interface Props {
 const AddToCart = ({ variantId, token }: Props) => {
   return (
     <button
-      className="btn btn-sm w-fit"
+      className="w-fit uppercase bg-black text-white p-1 hover:bg-gray-800 transition"
       onClick={() => handleAddToCart(variantId, token)}
     >
-      Add To Cart
+      Add To Bag
     </button>
   );
 };

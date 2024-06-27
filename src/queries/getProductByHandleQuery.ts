@@ -18,6 +18,10 @@ const getProductByHandleQuery = `
           node {
             title
             id
+            price {
+              amount
+              currencyCode
+            }
           }
         }
       }

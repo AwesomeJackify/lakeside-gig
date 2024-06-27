@@ -55,6 +55,7 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
           <Image
             src={heroImage}
             alt="Hero image"
+            loading={"eager"}
             class={`h-full w-full object-cover ${
               index > 1 ? "max-md:hidden" : ""
             }`}

@@ -27,9 +27,8 @@ const { data } = await createClient(
 
 <Layout title={config.businessName} description={config.description}>
   <section>
-    <div class="grid grid-cols-3 px-2">
+    <div class="grid grid-cols-3 px-2 gap-4">
       <div class="flex flex-col gap-4 justify-center top-0 sticky h-screen">
-        <h1 class="text-sm">{data.productByHandle.title}</h1>
         <div class="text-xs">
           <DangerousHtml code={data.productByHandle.descriptionHtml} />
         </div>
@@ -47,10 +46,13 @@ const { data } = await createClient(
         }
       </div>
 
-      <div class="justify-center items-center flex sticky top-0 h-screen">
+      <div
+        class="justify-center items-center flex flex-col sticky top-0 h-screen"
+      >
         <SelectVariant
           token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
           variants={data.productByHandle.variants}
+          title={data.productByHandle.title}
           client:only="react"
         />
       </div>
