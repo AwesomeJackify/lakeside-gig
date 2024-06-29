@@ -45,8 +45,8 @@ const Nav = ({ token }: Props) => {
   }, [showMobileMenu]);
 
   return (
-    <nav className="px-4 py-4">
-      <div className="sticky top-0 grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs z-50">
+    <nav className="px-4 py-4 sticky top-0">
+      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs z-50">
         <div className="flex items-center gap-8">
           <a href="/">
             <img
@@ -105,7 +105,9 @@ const Nav = ({ token }: Props) => {
         <div className="flex items-center gap-2">
           <Cart token={token} />
           <button
-            className="border-2 p-1 rounded-md border-black"
+            className={`border-2 p-1 rounded-md border-black ${
+              showMobileMenu ? "bg-black text-white" : ""
+            }`}
             onClick={() => setShowMobileMenu(!showMobileMenu)}
           >
             MENU

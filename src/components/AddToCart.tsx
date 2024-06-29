@@ -38,7 +38,7 @@ interface Props {
 const AddToCart = ({ variantId, token }: Props) => {
   return (
     <button
-      className="w-fit uppercase bg-black text-white p-1 hover:bg-gray-800 transition"
+      className="w-fit uppercase max-md:w-full bg-black text-white p-1 hover:bg-gray-800 transition"
       onClick={() => handleAddToCart(variantId, token)}
     >
       Add To Bag
