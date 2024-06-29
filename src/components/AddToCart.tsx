@@ -6,7 +6,11 @@ import { $totalQuantity } from "../../stores/cartStore";
 
 import addCartLinesQuery from "../queries/addCartLinesQuery";
 
+import { startLoader, stopLoader } from "./Loader";
+
 const handleAddToCart = async (variantId: string, token: string) => {
+  startLoader();
+
   const { data } = await createClient(token).request(addCartLinesQuery, {
     variables: {
       cartId: localStorage.getItem("cartId"),
@@ -20,6 +24,7 @@ const handleAddToCart = async (variantId: string, token: string) => {
   });
 
   if (data) {
+    stopLoader();
     let totalQuantity = 0;
 
     data.cartLinesAdd.cart.lines.edges.forEach((line: any) => {
