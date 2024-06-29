@@ -42,10 +42,31 @@ const CartItems = ({ token }: Props) => {
     getCart();
   }, []);
 
+  const startLoader = () => {
+    const spinner = document.createElement("span");
+    spinner.id = "loader";
+    spinner.classList.add(
+      "loading",
+      "loading-infinity",
+      "loading-lg",
+      "fixed",
+      "right-4",
+      "bottom-4",
+      "z-20"
+    );
+    document.body.appendChild(spinner);
+  };
+
+  const stopLoader = () => {
+    const spinner = document.querySelector("span#loader");
+    spinner?.remove();
+  };
+
   const handleDeleteCartItem = async (
     lineId: string,
     quantityToRemove: number
   ) => {
+    startLoader();
     await createClient(token)
       .request(removeCartLinesQuery, {
         variables: {
@@ -54,6 +75,7 @@ const CartItems = ({ token }: Props) => {
         },
       })
       .then(() => {
+        stopLoader();
         setCartItems((prevItems: any) =>
           prevItems.filter((item: any) => item.id !== lineId)
         );

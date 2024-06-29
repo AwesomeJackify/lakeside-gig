@@ -46,11 +46,11 @@ const Nav = ({ token }: Props) => {
 
   return (
     <nav
-      className={`px-4 py-4 ${
+      className={`px-4 py-4 z-50 ${
         showMobileMenu ? "fixed w-full" : "sticky"
       } top-0`}
     >
-      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs z-50">
+      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs">
         <div className="flex items-center gap-8">
           <a href="/">
             <img
@@ -119,7 +119,7 @@ const Nav = ({ token }: Props) => {
         </div>
       </div>
       <div
-        className={`fixed z-20 top-0 left-0 right-0 md:hidden bottom-0 bg-white ${
+        className={`fixed top-0 left-0 right-0 md:hidden bottom-0 bg-white ${
           showMobileMenu ? "" : "hidden"
         }`}
       >
