@@ -22,7 +22,6 @@ const CartItems = ({ token }: Props) => {
         },
       });
       setShopifyCart(data);
-      console.log(data);
 
       if (data.cart) {
         data.cart.lines.edges.forEach((line: any) => {
@@ -47,20 +46,20 @@ const CartItems = ({ token }: Props) => {
     lineId: string,
     quantityToRemove: number
   ) => {
-    const { data } = await createClient(token).request(removeCartLinesQuery, {
-      variables: {
-        cartId: shopifyCart.cart.id,
-        lineIds: [lineId],
-      },
-    });
+    await createClient(token)
+      .request(removeCartLinesQuery, {
+        variables: {
+          cartId: shopifyCart.cart.id,
+          lineIds: [lineId],
+        },
+      })
+      .then(() => {
+        setCartItems((prevItems: any) =>
+          prevItems.filter((item: any) => item.id !== lineId)
+        );
 
-    if (data) {
-      setCartItems((prevItems: any) =>
-        prevItems.filter((item: any) => item.id !== lineId)
-      );
-
-      $totalQuantity.set($totalQuantity.get() - quantityToRemove);
-    }
+        $totalQuantity.set($totalQuantity.get() - quantityToRemove);
+      });
   };
 
   const handleCheckout = async () => {
