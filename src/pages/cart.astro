@@ -10,5 +10,7 @@ const publicAccessToken = import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN;
 ---
 
 <Layout title={config.businessName} description={config.description}>
-  <CartItems client:only="react" token={publicAccessToken} />
+  <div class="max-md:min-h-96">
+    <CartItems client:only="react" token={publicAccessToken} />
+  </div>
 </Layout>

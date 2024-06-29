@@ -68,7 +68,7 @@ const CartItems = ({ token }: Props) => {
   };
 
   return (
-    <div className="grid grid-cols-2 max-w-screen-xl mx-auto">
+    <div className="grid grid-cols-2 max-md:grid-cols-1 max-md:gap-4 max-w-screen-xl mx-auto">
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -114,7 +114,7 @@ const CartItems = ({ token }: Props) => {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-col max-w-md mx-auto w-full gap-8">
+      <div className="flex flex-col max-md:px-2 max-w-md mx-auto w-full gap-8">
         <div>
           <h1 className="font-light">SUBTOTAL</h1>
           <h2 className="text-4xl">
