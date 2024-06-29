@@ -63,7 +63,7 @@ import { ViewTransitions } from "astro:transitions";
         padding-left: 24px;
       }
     </style>
-    <script is:inline>
+    <script>
       document.addEventListener("astro:before-preparation", (ev) => {
         const originalLoader = ev.loader;
         ev.loader = async function () {

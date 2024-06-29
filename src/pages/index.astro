@@ -51,7 +51,7 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
             src={heroImage}
             alt="Hero image"
             loading={"eager"}
-            class={`h-full w-full object-cover ${
+            class={`heroImg h-full w-full object-cover ${
               index > 1 ? "max-md:hidden" : ""
             }`}
           />
@@ -94,3 +94,30 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     </section>
   </div>
 </Layout>
+
+<script>
+  import { startLoader, stopLoader } from "../components/Loader";
+
+  startLoader();
+
+  let totalImages = 4;
+  let loadedImages = 0;
+
+  const heroImages = document.getElementsByClassName("heroImg");
+
+  const checkAndStopLoader = () => {
+    loadedImages++;
+    if (loadedImages === totalImages) {
+      stopLoader();
+    }
+  };
+
+  for (let i = 0; i < heroImages.length; i++) {
+    if ((heroImages[i] as HTMLImageElement).complete) {
+      checkAndStopLoader();
+    } else {
+      heroImages[i].addEventListener("load", checkAndStopLoader);
+      heroImages[i].addEventListener("error", checkAndStopLoader); // Handle errors
+    }
+  }
+</script>
