@@ -28,7 +28,7 @@ const SelectVariant = ({ variants, token, title }: Props) => {
 
   return (
     <div className="flex flex-col max-w-sm w-full">
-      <h1 className="bg-gradient-to-r from-[#323A84] via-[#6669BB] to-[#323A84] text-white text-center px-2 py-4 text-4xl">
+      <h1 className="bg-gradient-to-r from-black via-slate-300 to-black text-white text-center px-2 py-4 text-4xl">
         {title}
       </h1>
       <div className="grid grid-cols-2 place-items-center">

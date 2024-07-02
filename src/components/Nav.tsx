@@ -50,7 +50,7 @@ const Nav = ({ token }: Props) => {
         showMobileMenu ? "fixed w-full" : "sticky"
       } top-0`}
     >
-      <div className="grid grid-cols-3 items-center w-full justify-between  max-lg:hidden text-xs">
+      <div className="grid grid-cols-3 items-center w-full justify-between max-lg:hidden text-xs">
         <div className="flex items-center gap-8">
           <a href="/">
             <img
