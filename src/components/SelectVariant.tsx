@@ -27,24 +27,24 @@ const SelectVariant = ({ variants, token, title }: Props) => {
   };
 
   return (
-    <div className="flex flex-col max-w-sm w-full">
-      <h1 className="bg-gradient-to-r from-black via-slate-300 to-black text-white text-center px-2 py-4 text-4xl">
+    <div className="flex flex-col max-w-sm w-full gap-2">
+      <h1 className="text-black text-start max-md:text-center max-md:text-2xl text-base">
         {title}
       </h1>
       <div className="grid grid-cols-2 place-items-center">
-        <div className="flex items-center justify-center">
-          <h2 className="text-center text-2xl font-extralight text-gray-500">
+        <div className="flex items-center justify-center w-full">
+          <h2 className="text-center text-2xl font-extralight ">
             {formatter.format(variant.price.amount)}
           </h2>
         </div>
 
-        <div className="join justify-end pr-8 mx-auto gap-4 text-2xl bg-gradient-to-r from-10% to-gray-500 rounded-none from-transparent w-full">
+        <div className="join justify-end pr-8 mx-auto gap-1 text-2xl rounded-none from-transparent w-full">
           {variants.edges.map((variantItem: any) => (
             <button
               key={variantItem.node.title}
-              className={`${
+              className={`aspect-square w-12 ${
                 variantItem.node.title == variant.title
-                  ? "text-white"
+                  ? "rounded-full border-2 bg-slate-200"
                   : "text-black"
               }`}
               onClick={() => handleButtonChange(variantItem)}
