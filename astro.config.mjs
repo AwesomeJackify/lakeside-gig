@@ -8,7 +8,7 @@ import netlify from "@astrojs/netlify";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), icon(), react()],
-  output: "hybrid",
+  output: "server",
   adapter: netlify(),
   image: {
     domains: ["cdn.shopify.com"],
