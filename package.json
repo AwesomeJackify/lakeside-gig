@@ -15,7 +15,7 @@
     "@astrojs/react": "^3.5.0",
     "@astrojs/tailwind": "^5.1.0",
     "@iconify-json/mdi": "^1.1.66",
-    "@nanostores/react": "^0.7.2",
+    "@nanostores/react": "^0.7.3",
     "@shopify/storefront-api-client": "^1.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

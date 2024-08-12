@@ -10,7 +10,7 @@ import DangerousHtml from "../../components/DangerousHtml";
 import SelectVariant from "../../components/SelectVariant";
 
 import { createClient } from "../../utils";
-
+import { country } from "../../countryStore";
 import getProductByHandleQuery from "../../queries/getProductByHandleQuery";
 import { Image } from "astro:assets";
 
@@ -21,6 +21,7 @@ const { data } = await createClient(
 ).request(getProductByHandleQuery, {
   variables: {
     handle: handle,
+    country: country.get(),
   },
 });
 ---

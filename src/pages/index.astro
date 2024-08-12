@@ -7,7 +7,7 @@ import config from "../data/config.json";
 import { createClient } from "../utils";
 import getCollectionByIdQuery from "../queries/getCollectionByIdQuery";
 import { Image } from "astro:assets";
-import { formatter } from "../utils";
+import { formatPrice } from "../utils";
 
 import hero1 from "../assets/images/hero1.jpg";
 import hero2 from "../assets/images/hero2.jpg";
@@ -36,6 +36,7 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     images: product.node.images,
     imageUrl: product.node.featuredImage.url,
     maxPrice: product.node.priceRange.maxVariantPrice.amount,
+    currencyCode: product.node.priceRange.maxVariantPrice.currencyCode,
   };
 });
 ---
@@ -43,7 +44,7 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 <Layout title={config.businessName} description={config.description}>
   <div class="flex flex-col gap-16 max-md:gap-8">
     <section
-      class="w-full h-[500px] grid grid-cols-4 max-md:h-72 max-md:grid-cols-2"
+      class="w-full h-[500px] overflow-hidden grid grid-cols-4 max-md:h-72 max-md:grid-cols-2"
     >
       {
         heroImages.map((heroImage, index) => (
@@ -85,7 +86,7 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 
               <h1 class="uppercase text-sm">{product.title}</h1>
               <h2 class="text-sm font-light">
-                {formatter.format(product.maxPrice)}
+                {formatPrice(product.maxPrice, product.currencyCode)}
               </h2>
             </a>
           ))

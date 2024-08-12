@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
-import { formatter } from "../utils";
+import { formatPrice } from "../utils";
 
 interface Props {
   variants: any;
@@ -34,7 +34,7 @@ const SelectVariant = ({ variants, token, title }: Props) => {
       <div className="grid grid-cols-2 place-items-center">
         <div className="flex items-center justify-center w-full">
           <h2 className="text-center text-2xl font-extralight ">
-            {formatter.format(variant.price.amount)}
+            {formatPrice(variant.price.amount, variant.price.currencyCode)}
           </h2>
         </div>
 

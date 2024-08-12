@@ -1,11 +1,17 @@
 ---
 const date = new Date().getFullYear();
+import { Image } from "astro:assets";
+import astroLogo from "../assets/images/AstroMediaLogo.svg";
+
+import SelectCountry from "./SelectCountry";
 ---
 
 <footer
-  class="grid mt-auto grid-cols-2 max-md:grid-cols-1 uppercase py-16 max-md:py-8 max-md:px-2 font-light text-xs max-md:text-sm px-16"
+  class="grid mt-auto grid-cols-3 max-md:grid-cols-1 uppercase py-16 max-md:py-8 max-md:px-2 font-light text-xs max-md:text-sm px-16"
 >
-  <div class="flex gap-16 max-md:flex-col max-md:gap-2">
+  <div
+    class="flex flex-wrap gap-x-16 gap-y-4 max-md:flex-col max-md:gap-2 col-span-2"
+  >
     <a href="https://instagram.com" class="link link-hover">instagram</a>
     <div class="flex flex-col gap-1">
       <h1>company: Lakeside LTD</h1>
@@ -15,9 +21,23 @@ const date = new Date().getFullYear();
       <a href="#" class="link link-hover">Terms of use</a>
       <a href="#" class="link link-hover">Privacy Policy</a>
     </div>
+    <SelectCountry client:only="react" />
   </div>
   <div class="flex flex-col items-end gap-1">
     <h1>copyright Lakeside {date}</h1>
     <h1>shipping from New Zealand</h1>
+    <!-- <p class="mt-4 flex items-center gap-1 max-md:self-center">
+      Made possible by <a
+        href="https://astromedia.dev"
+        class="link hover:text-accent transition-colors"
+        target="_blank">Astro Media</a
+      ><Image
+        class="w-5"
+        src={astroLogo}
+        width={10}
+        height={10}
+        alt="digital agency"
+      />
+    </p> -->
   </div>
 </footer>

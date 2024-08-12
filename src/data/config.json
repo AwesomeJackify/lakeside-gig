@@ -1,4 +1,22 @@
 {
   "businessName": "Lakeside",
-  "description": "This is the amazing e-commerce site."
+  "description": "This is the amazing e-commerce site.",
+  "countries": {
+    "nz": {
+      "language": "EN",
+      "country": "NZ",
+      "label": "New Zealand (NZD $)"
+    },
+    "us": {
+      "language": "EN",
+      "country": "US",
+      "label": "United States of America (USD $)"
+    },
+    "cn": {
+      "language": "ZH",
+      "country": "CN",
+      "label": "China (CNY ¥)"
+    }
+  },
+  "currentCountry": "us"
 }

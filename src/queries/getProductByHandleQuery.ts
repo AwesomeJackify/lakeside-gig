@@ -1,11 +1,11 @@
 const getProductByHandleQuery = `
-  query getProductByHandle($handle: String!) {
+  query getProductByHandle($handle: String!, $country: CountryCode!) @inContext(country: $country) {
     productByHandle(handle: $handle) {
       id
       title
       handle
       descriptionHtml
-      images(first:5) {
+      images(first: 5) {
         edges {
           node {
             altText
@@ -13,7 +13,7 @@ const getProductByHandleQuery = `
           }
         }
       }
-      variants(first:10) {
+      variants(first: 10) {
         edges {
           node {
             title
@@ -31,6 +31,6 @@ const getProductByHandleQuery = `
       }
     }
   }
-`
+`;
 
 export default getProductByHandleQuery;

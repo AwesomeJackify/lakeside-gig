@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { createClient, formatter } from "../utils";
+import { createClient, formatPrice } from "../utils";
 
 import getCartQuery from "../queries/getCartQuery";
 import removeCartLinesQuery from "../queries/removeCartLinesQuery";
@@ -35,6 +35,7 @@ const CartItems = ({ token }: Props) => {
               variant: line.node.merchandise.title,
               quantity: line.node.quantity,
               price: line.node.merchandise.price.amount,
+              currencyCode: line.node.merchandise.price.currencyCode,
               id: line.node.id,
             },
           ]);
@@ -104,7 +105,9 @@ const CartItems = ({ token }: Props) => {
                       {cartItem.variant}
                     </td>
                     <td>{cartItem.quantity}</td>
-                    <td>{formatter.format(cartItem.price)}</td>
+                    <td>
+                      {formatPrice(cartItem.price, cartItem.currencyCode)}
+                    </td>
                     <td>
                       <button
                         onClick={() =>
@@ -124,7 +127,10 @@ const CartItems = ({ token }: Props) => {
               <h1 className="font-light">SUBTOTAL</h1>
               <h2 className="text-4xl">
                 {shopifyCart.cart &&
-                  formatter.format(shopifyCart.cart.cost.subtotalAmount.amount)}
+                  formatPrice(
+                    shopifyCart.cart.cost.subtotalAmount.amount,
+                    shopifyCart.cart.cost.subtotalAmount.currencyCode
+                  )}
               </h2>
             </div>
             <div className="flex flex-col gap-4">
