@@ -1,6 +1,10 @@
 const createCartQuery = `
-  mutation createCartQuery{
-    cartCreate{
+  mutation createCartQuery($country: CountryCode!) @inContext(country: $country){
+    cartCreate(input: {
+      buyerIdentity: {
+        countryCode: $country
+      }
+    }){
       cart {
         checkoutUrl
         id

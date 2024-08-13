@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { country } from "../countryStore";
-import { useStore } from "@nanostores/react";
+import { DEFAULT_COUNTRY } from "../utils";
 
 const SelectCountry = () => {
   const countries = ["NZ", "US", "CN"];
-  const $country = useStore(country);
+  const currentCountry =
+    localStorage.getItem("currentCountry") || DEFAULT_COUNTRY;
 
   const handleSelectChange = (event: any) => {
-    country.set(event.target.value);
+    console.log(event.target.value);
+    localStorage.setItem("currentCountry", event.target.value);
+    localStorage.removeItem("cartId");
+    window.location.reload();
   };
 
   return (
@@ -16,6 +19,7 @@ const SelectCountry = () => {
       <select
         className="select w-fit max-w-xs uppercase text-xs"
         onChange={handleSelectChange}
+        value={currentCountry}
       >
         {countries.map((country) => (
           <option key={country}>{country}</option>

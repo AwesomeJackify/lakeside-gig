@@ -1,5 +1,5 @@
 const getCollectionByIdQuery = `
-  query getCollectionByIdQuery($id: ID!) {
+  query getCollectionByIdQuery($id: ID!, $country: CountryCode!) @inContext(country: $country) {
     collection(id: $id) {
       id
       title

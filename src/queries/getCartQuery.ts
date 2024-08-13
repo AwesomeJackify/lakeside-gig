@@ -1,5 +1,5 @@
 const getCartQuery = `
-  query getCartQuery($id: ID!) {
+  query getCartQuery($id: ID!){
     cart(id: $id) {
         checkoutUrl
         id

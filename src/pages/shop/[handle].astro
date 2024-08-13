@@ -10,9 +10,9 @@ import DangerousHtml from "../../components/DangerousHtml";
 import SelectVariant from "../../components/SelectVariant";
 
 import { createClient } from "../../utils";
-import { country } from "../../countryStore";
 import getProductByHandleQuery from "../../queries/getProductByHandleQuery";
 import { Image } from "astro:assets";
+import { DEFAULT_COUNTRY } from "../../utils";
 
 const { handle } = Astro.params;
 
@@ -21,7 +21,7 @@ const { data } = await createClient(
 ).request(getProductByHandleQuery, {
   variables: {
     handle: handle,
-    country: country.get(),
+    country: DEFAULT_COUNTRY,
   },
 });
 ---
@@ -51,9 +51,9 @@ const { data } = await createClient(
         class="justify-center items-center flex flex-col sticky top-0 h-screen"
       >
         <SelectVariant
+          client:load
           token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
-          variants={data.productByHandle.variants}
-          title={data.productByHandle.title}
+          handle={handle || ""}
           client:only="react"
         />
       </div>
@@ -62,9 +62,9 @@ const { data } = await createClient(
   <section class="md:hidden flex flex-col">
     <div class="justify-start items-center flex flex-col">
       <SelectVariant
+        client:load
         token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
-        variants={data.productByHandle.variants}
-        title={data.productByHandle.title}
+        handle={handle || ""}
         client:only="react"
       />
     </div>

@@ -5,6 +5,7 @@ import { createClient, formatPrice } from "../utils";
 import getCartQuery from "../queries/getCartQuery";
 import removeCartLinesQuery from "../queries/removeCartLinesQuery";
 import { $totalQuantity } from "../../stores/cartStore";
+import { DEFAULT_COUNTRY } from "../utils";
 
 import { startLoader, stopLoader } from "./Loader";
 
@@ -18,14 +19,17 @@ const CartItems = ({ token }: Props) => {
 
   useEffect(() => {
     const getCart = async () => {
+      const cartId = localStorage.getItem("cartId");
+      if (!cartId) return;
       const { data } = await createClient(token).request(getCartQuery, {
         variables: {
-          id: localStorage.getItem("cartId"),
+          id: cartId,
+          country: localStorage.getItem("currentCountry") || DEFAULT_COUNTRY,
         },
       });
       setShopifyCart(data);
 
-      if (data.cart) {
+      if (data) {
         data.cart.lines.edges.forEach((line: any) => {
           setCartItems((prevItems: any) => [
             ...prevItems,
@@ -89,7 +93,7 @@ const CartItems = ({ token }: Props) => {
               </thead>
               <tbody>
                 {cartItems.map((cartItem: any, index: number) => (
-                  <tr key={cartItem.product}>
+                  <tr key={index}>
                     <th>
                       <img
                         src={cartItem.image}

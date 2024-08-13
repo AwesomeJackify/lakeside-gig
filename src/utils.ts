@@ -16,3 +16,5 @@ export const formatPrice = (amount: number, currencyCode: string) => {
     currencyDisplay: 'narrowSymbol'
   }).format(amount);
 };
+
+export const DEFAULT_COUNTRY = "US";

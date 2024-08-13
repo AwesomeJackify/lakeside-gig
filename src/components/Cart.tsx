@@ -9,6 +9,8 @@ import createCartQuery from "../queries/createCartQuery";
 
 import { $totalQuantity } from "../../stores/cartStore";
 
+import { DEFAULT_COUNTRY } from "../utils";
+
 interface Props {
   token: string;
 }
@@ -22,7 +24,11 @@ const Cart = ({ token }: Props) => {
     const cartId = localStorage.getItem("cartId");
 
     const createCart = async () => {
-      const { data } = await createClient(token).request(createCartQuery);
+      const { data } = await createClient(token).request(createCartQuery, {
+        variables: {
+          country: localStorage.getItem("currentCountry") || DEFAULT_COUNTRY,
+        },
+      });
       return data;
     };
 

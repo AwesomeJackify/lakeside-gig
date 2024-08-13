@@ -16,12 +16,17 @@ import hero4 from "../assets/images/hero4.png";
 
 const heroImages = [hero1, hero2, hero3, hero4];
 
+import { DEFAULT_COUNTRY } from "../utils";
+
+import ProductCountryPrice from "../components/ProductCountryPrice";
+
 // get the collection that is shown on the home page
 const { data } = await createClient(
   import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN
 ).request(getCollectionByIdQuery, {
   variables: {
     id: "gid://shopify/Collection/484202283282",
+    country: DEFAULT_COUNTRY,
   },
 });
 
@@ -86,7 +91,11 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 
               <h1 class="uppercase text-sm">{product.title}</h1>
               <h2 class="text-sm font-light">
-                {formatPrice(product.maxPrice, product.currencyCode)}
+                <ProductCountryPrice
+                  token={import.meta.env.SHOPIFY_PUBLIC_ACCESS_TOKEN}
+                  handle={product.handle}
+                  client:load
+                />
               </h2>
             </a>
           ))

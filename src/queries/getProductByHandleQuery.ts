@@ -4,6 +4,16 @@ const getProductByHandleQuery = `
       id
       title
       handle
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+        maxVariantPrice {
+          amount
+          currencyCode
+        }
+      }
       descriptionHtml
       images(first: 5) {
         edges {
