@@ -34,12 +34,12 @@ const { data } = await createClient(
           <DangerousHtml code={data.productByHandle.descriptionHtml} />
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col gap-32">
         {
           data.productByHandle.images.edges.map((image: any) => (
             <Image
               inferSize
-              class="h-full w-full object-cover aspect-[2/3]"
+              class="h-full w-full object-contain"
               src={image.node.url}
               alt={image.altText ? image.altText : config.businessName}
             />
@@ -59,7 +59,7 @@ const { data } = await createClient(
       </div>
     </div>
   </section>
-  <section class="md:hidden flex flex-col">
+  <section class="md:hidden flex flex-col gap-8">
     <div class="justify-start items-center flex flex-col">
       <SelectVariant
         client:load
@@ -70,7 +70,7 @@ const { data } = await createClient(
     </div>
     <Image
       inferSize
-      class="h-full w-full object-cover aspect-[2/3]"
+      class="h-full w-full object-contain"
       src={data.productByHandle.featuredImage.url}
       alt={data.productByHandle.featuredImage.altText
         ? data.productByHandle.featuredImage.altText
@@ -86,7 +86,7 @@ const { data } = await createClient(
           .map((image: any) => (
             <Image
               inferSize
-              class="h-full w-full object-cover aspect-[2/3]"
+              class="h-full w-full object-contain"
               src={image.node.url}
               alt={image.altText ? image.altText : config.businessName}
             />
