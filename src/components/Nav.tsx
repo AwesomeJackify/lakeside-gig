@@ -16,8 +16,8 @@ const Nav = ({ token }: Props) => {
 
   const leftItems = [
     {
-      name: "about",
-      url: "/about",
+      name: "campaign",
+      url: "/campaign",
     },
     {
       name: "contact",
@@ -46,9 +46,8 @@ const Nav = ({ token }: Props) => {
 
   return (
     <nav
-      className={`px-4 py-4 z-50 ${
-        showMobileMenu ? "fixed w-full" : "sticky"
-      } top-0`}
+      className={`px-4 py-4 z-50 ${showMobileMenu ? "fixed w-full" : "sticky"
+        } top-0`}
     >
       <div className="grid grid-cols-3 items-center w-full justify-between max-lg:hidden text-xs">
         <div className="flex items-center gap-8">
@@ -109,9 +108,8 @@ const Nav = ({ token }: Props) => {
         <div className="flex items-center gap-2">
           <Cart token={token} />
           <button
-            className={`border-2 p-1 rounded-md border-black ${
-              showMobileMenu ? "bg-black text-white" : ""
-            }`}
+            className={`border-2 p-1 rounded-md border-black ${showMobileMenu ? "bg-black text-white" : ""
+              }`}
             onClick={() => setShowMobileMenu(!showMobileMenu)}
           >
             MENU
@@ -119,9 +117,8 @@ const Nav = ({ token }: Props) => {
         </div>
       </div>
       <div
-        className={`fixed top-0 left-0 right-0 md:hidden bottom-0 bg-white ${
-          showMobileMenu ? "" : "hidden"
-        }`}
+        className={`fixed top-0 left-0 right-0 md:hidden bottom-0 bg-white ${showMobileMenu ? "" : "hidden"
+          }`}
       >
         <div className="flex flex-col gap-4 py-4 mt-16 ml-6">
           {leftItems.map((leftItem) => (

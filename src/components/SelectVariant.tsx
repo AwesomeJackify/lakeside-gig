@@ -67,18 +67,17 @@ const SelectVariant = ({ token, handle }: Props) => {
           </h2>
         </div>
 
-        <div className="join justify-end pr-8 mx-auto gap-1 text-2xl rounded-none from-transparent w-full">
+        <div className="join max-md:mr-4 text-lg rounded-none from-transparent w-full">
           {data.productByHandle.variants.edges.map((variantItem: any) => (
             <button
               key={variantItem.node.title}
-              className={`aspect-square w-12 ${
-                variantItem.node.title === variant.title
-                  ? "rounded-full border-2 bg-slate-200"
-                  : "text-black"
-              }`}
+              className={`w-10 ${variantItem.node.title === variant.title
+                ? "rounded-lg border-2 border-black"
+                : "text-black"
+                }`}
               onClick={() => handleButtonChange(variantItem)}
             >
-              {variantItem.node.title[0]}
+              {variantItem.node.title}
             </button>
           ))}
         </div>
