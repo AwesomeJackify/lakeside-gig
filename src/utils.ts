@@ -17,4 +17,4 @@ export const formatPrice = (amount: number, currencyCode: string) => {
   }).format(amount);
 };
 
-export const DEFAULT_COUNTRY = "US";
+export const DEFAULT_COUNTRY = "NZ";
