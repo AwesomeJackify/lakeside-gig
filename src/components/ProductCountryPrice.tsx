@@ -23,7 +23,6 @@ const CountryPrice = ({ token, handle }: Props) => {
       );
 
       setData(data);
-      console.log(data);
     };
 
     fetchData();

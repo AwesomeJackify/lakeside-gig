@@ -7,7 +7,6 @@ const SelectCountry = () => {
     localStorage.getItem("currentCountry") || DEFAULT_COUNTRY;
 
   const handleSelectChange = (event: any) => {
-    console.log(event.target.value);
     localStorage.setItem("currentCountry", event.target.value);
     localStorage.removeItem("cartId");
     window.location.reload();
