@@ -69,7 +69,7 @@ import { ViewTransitions } from "astro:transitions";
         padding-left: 24px;
       }
     </style>
-    <script>
+    <script is:inline>
       document.addEventListener("astro:before-preparation", (ev) => {
         const originalLoader = ev.loader;
         ev.loader = async function () {
@@ -85,8 +85,14 @@ import { ViewTransitions } from "astro:transitions";
           );
           document.body.appendChild(spinner);
           await originalLoader();
-          document.body.removeChild(spinner);
         };
+      });
+
+      document.addEventListener("astro:after-preparation", () => {
+        const spinner = document.querySelector("span.loading");
+        if (spinner) {
+          spinner.remove();
+        }
       });
     </script>
   </body>

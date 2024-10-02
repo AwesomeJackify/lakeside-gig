@@ -24,6 +24,8 @@ const { data } = await createClient(
     country: DEFAULT_COUNTRY,
   },
 });
+
+const id = data.productByHandle.id.split("gid://shopify/Product/")[1];
 ---
 
 <Layout title={config.businessName} description={config.description}>
@@ -48,7 +50,7 @@ const { data } = await createClient(
       </div>
 
       <div
-        class="justify-center items-center flex flex-col sticky top-0 h-screen"
+        class="justify-center gap-4 items-center flex flex-col sticky top-0 h-screen"
       >
         <SelectVariant
           client:load
@@ -56,6 +58,13 @@ const { data } = await createClient(
           handle={handle || ""}
           client:only="react"
         />
+        <div class="max-w-sm mx-auto w-full">
+          <a
+            download
+            class="text-start w-full text-sm link"
+            href={"/sizeguides/" + id + ".pdf"}>Download sizing guide</a
+          >
+        </div>
       </div>
     </div>
   </section>
