@@ -77,6 +77,11 @@ const id = data.productByHandle.id.split("gid://shopify/Product/")[1];
         client:only="react"
       />
     </div>
+    <a
+      download
+      class="w-full text-sm link text-center"
+      href={"/sizeguides/" + id + ".pdf"}>Download sizing guide</a
+    >
     <Image
       inferSize
       class="h-full w-full object-contain"
