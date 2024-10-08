@@ -6,8 +6,17 @@ import config from "../data/config.json";
 
 import { createClient } from "../utils";
 import { Image } from "astro:assets";
+import pic1 from '../assets/images/campaign/pic1.jpg'
+import pic2 from '../assets/images/campaign/pic2.jpg'
+import pic3 from '../assets/images/campaign/pic3.jpg'
 ---
 
 <Layout title={config.businessName} description={config.description}>
-  <h1>Campaign</h1>
+
+  <div class='flex flex-col items-center gap-4'>
+    <h1>CAMPAIGN</h1>
+<Image width={500} height={500} src={pic1} alt="Picture of lookbook"/>
+<Image width={500} height={500} src={pic2} alt="Picture of lookbook"/>
+<Image width={500} height={500} src={pic3} alt="Picture of lookbook"/>
+  </div>
 </Layout>
