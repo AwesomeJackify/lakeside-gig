@@ -9,7 +9,8 @@ import getCollectionByIdQuery from "../queries/getCollectionByIdQuery";
 import { Image } from "astro:assets";
 import { formatPrice } from "../utils";
 
-import hero from "../assets/images/hero.jpeg";
+import heroImg1 from "../assets/images/hero1.jpeg";
+import heroImg2 from "../assets/images/hero2.png";
 
 import { DEFAULT_COUNTRY } from "../utils";
 
@@ -43,11 +44,18 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
 
 <Layout title={config.businessName} description={config.description}>
   <div class="flex flex-col gap-16 max-md:gap-8">
-    <section class="w-full h-[600px] overflow-hidden max-md:h-96">
+    <section class="relative w-full h-[600px] overflow-hidden max-md:h-96">
       <Image
-        src={hero}
+        src={heroImg1}
         alt="Hero Image 1"
-        class="heroImg object-cover w-full h-full"
+        id="heroImg1"
+        class="absolute top-0 left-0 object-cover w-full h-full"
+      />
+      <Image
+        src={heroImg2}
+        alt="Hero Image 2"
+        id="heroImg2"
+        class="z-10 opacity-0 absolute top-0 left-0 object-cover w-full h-full"
       />
     </section>
     <section class="flex flex-col gap-16 max-md:gap-8">
@@ -90,3 +98,17 @@ const homePageProducts = data.collection.products.edges.map((product: any) => {
     </section>
   </div>
 </Layout>
+
+<script>
+  import gsap from "gsap";
+
+  const tl = gsap.timeline({ repeat: -1 });
+
+  const duration = 4;
+  const hold = 2;
+
+  tl.to("#heroImg1", { opacity: 0, duration: duration }, "+=" + hold)
+    .to("#heroImg2", { opacity: 1, duration: duration }, "<")
+    .to("#heroImg2", { opacity: 0, duration: duration }, "+=" + hold)
+    .to("#heroImg1", { opacity: 1, duration: duration }, "<");
+</script>
