@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
-    "@astrojs/netlify": "^5.3.5",
+    "@astrojs/netlify": "^6.4.0",
     "@astrojs/react": "^3.5.0",
     "@astrojs/tailwind": "^5.1.0",
     "@iconify-json/mdi": "^1.1.66",

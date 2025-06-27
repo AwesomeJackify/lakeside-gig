@@ -60,21 +60,22 @@ const SelectVariant = ({ token, handle }: Props) => {
       <h1 className="text-black text-start max-md:text-center max-md:text-2xl text-base">
         {data.productByHandle.title}
       </h1>
-      <div className="grid grid-cols-2 place-items-center">
+      <div className="grid grid-cols-2 place-items-start">
         <div className="flex items-center justify-center w-full">
           <h2 className="text-center text-2xl font-extralight ">
             {formatPrice(variant.price.amount, variant.price.currencyCode)}
           </h2>
         </div>
 
-        <div className="join max-md:mr-4 text-lg rounded-none from-transparent w-full">
+        <div className="join max-md:mr-4 text-lg rounded-none from-transparent w-full max-lg:grid max-lg:grid-cols-2">
           {data.productByHandle.variants.edges.map((variantItem: any) => (
             <button
               key={variantItem.node.title}
-              className={`w-10 ${variantItem.node.title === variant.title
-                ? "rounded-lg border-2 border-black"
-                : "text-black"
-                }`}
+              className={`w-10 ${
+                variantItem.node.title === variant.title
+                  ? "rounded-lg border-2 border-black"
+                  : "text-black"
+              }`}
               onClick={() => handleButtonChange(variantItem)}
             >
               {variantItem.node.title}

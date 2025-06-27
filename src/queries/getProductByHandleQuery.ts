@@ -39,6 +39,7 @@ const getProductByHandleQuery = `
         url
         altText
       }
+      tags
     }
   }
 `;

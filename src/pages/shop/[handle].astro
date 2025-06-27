@@ -26,6 +26,8 @@ const { data } = await createClient(
 });
 
 const id = data.productByHandle.id.split("gid://shopify/Product/")[1];
+
+const hideSizingGuide = data.productByHandle.tags.includes("HideSizingGuide");
 ---
 
 <Layout title={config.businessName} description={config.description}>
@@ -58,7 +60,9 @@ const id = data.productByHandle.id.split("gid://shopify/Product/")[1];
           handle={handle || ""}
           client:only="react"
         />
-        <div class="max-w-sm mx-auto w-full">
+        <div
+          class={`max-w-sm mx-auto w-full ${hideSizingGuide ? "hidden" : ""}`}
+        >
           <a
             download
             class="text-start w-full text-sm link"
@@ -79,7 +83,7 @@ const id = data.productByHandle.id.split("gid://shopify/Product/")[1];
     </div>
     <a
       download
-      class="w-full text-sm link text-center"
+      class={`w-full text-sm link text-center ${hideSizingGuide ? "hidden" : ""}`}
       href={"/sizeguides/" + id + ".pdf"}>Download sizing guide</a
     >
     <Image
